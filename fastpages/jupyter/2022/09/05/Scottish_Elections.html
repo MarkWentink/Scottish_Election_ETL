@@ -118,12 +118,45 @@ window.onload = wrap_img;
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>Local election outcomes are collected and aggregated at ward level. Each ward or county has variations in how outcomes are recorded, formatted and filed.</p>
+<p>This project demonstrates how object-oriented programming can be used to create ETL pipelines to unify all these files into national-level data.</p>
+<p>We define a class of data transformers to:</p>
 <ul>
-<li>Aggregate various file types in one csv</li>
-<li>Extract the ward name and candidate names</li>
-<li>Convert preferential voting candidate numbers to their affialiate parties</li>
+<li><strong>Extract</strong> text data from 330 files with 5 different types: .csv, .txt, .xls, .xlsx, and .blt</li>
+<li><strong>Transform</strong> this data through a series of steps detailed below, and </li>
+<li><strong>Load</strong> an aggregated .csv file back into the directory.</li>
 </ul>
 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="File-Structures">File Structures<a class="anchor-link" href="#File-Structures"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The 330 files all have similar structures. 
+Each row represents a possible voting pattern, i.e. a possible combination of ranking candidates, along with the nr of times that particular combination occured. For example:</p>
+<p><code>122, 4, 2, 3, 1, 6</code></p>
+<p>represents that 122 votes were cast with the first preference going to candidate 4. Should that candidate drop out of the race, the vote should go to candidate 2, and so forth.</p>
+<p>The second to last row of the file lists the candidates and their party affiliations. The nr in the votes correspond to their ordering. i.e. <code>1</code> refers to the first candidate in the list, and the party they belong to.</p>
+<p>The last row in the file cites the ward the data corresponds to.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Transformations">Transformations<a class="anchor-link" href="#Transformations"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Class-Definitions">Class Definitions<a class="anchor-link" href="#Class-Definitions"> </a></h2>
 </div>
 </div>
 </div>
@@ -380,6 +413,12 @@ window.onload = wrap_img;
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Main-program-function">Main program function<a class="anchor-link" href="#Main-program-function"> </a></h2>
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -432,6 +471,12 @@ window.onload = wrap_img;
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Run-the-main-function">Run the main function<a class="anchor-link" href="#Run-the-main-function"> </a></h2>
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -440,6 +485,7 @@ window.onload = wrap_img;
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">master_data</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+<span class="n">master_data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -513,24 +559,7 @@ Ward already processed
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">master_data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    
-
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">master_data</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">master_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -670,117 +699,8 @@ Ward already processed
       <td>NaN</td>
       <td>NaN</td>
     </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>277730</th>
-      <td>Ward 2 - Kirkwall West and Orphir Ward</td>
-      <td>1.0</td>
-      <td>Scottish Greens</td>
-      <td>Independent</td>
-      <td>Independent</td>
-      <td>Independent</td>
-      <td>Independent</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>277731</th>
-      <td>Ward 2 - Kirkwall West and Orphir Ward</td>
-      <td>1.0</td>
-      <td>Independent</td>
-      <td>Independent</td>
-      <td>Independent</td>
-      <td>Independent</td>
-      <td>Independent</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>277732</th>
-      <td>Ward 2 - Kirkwall West and Orphir Ward</td>
-      <td>1.0</td>
-      <td>Scottish Greens</td>
-      <td>Independent</td>
-      <td>Independent</td>
-      <td>Independent</td>
-      <td>Independent</td>
-      <td>Independent</td>
-      <td>Independent</td>
-      <td>Independent</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>277733</th>
-      <td>Ward 2 - Kirkwall West and Orphir Ward</td>
-      <td>1.0</td>
-      <td>Scottish Greens</td>
-      <td>Independent</td>
-      <td>Independent</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>277734</th>
-      <td>Ward 2 - Kirkwall West and Orphir Ward</td>
-      <td>1.0</td>
-      <td>Scottish Greens</td>
-      <td>Independent</td>
-      <td>Independent</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
   </tbody>
 </table>
-<p>277735 rows × 15 columns</p>
 </div>
 </div>
 
