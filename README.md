@@ -11,6 +11,8 @@ https://MarkWentink.github.io/Scottish_Election_ETL/
 
 _powered by [fastpages](https://github.com/fastai/fastpages)_
 
+Welcome to my blog! There is lots of interesting stuff to read. 
+
 
 ## What To Do Next?
 
